@@ -89,4 +89,10 @@ form button {
   height: 230px;
   object-fit: cover;
   border-radius: 5px;
+  cursor: pointer; 
+}
+
+.photographer {
+  text-decoration: none;
+  color: hotpink;
 }

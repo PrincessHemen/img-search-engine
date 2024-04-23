@@ -26,7 +26,9 @@ const Search = () => {
           id: result.id,
           url: result.urls.small,
           alt: result.alt_description,
-          htmlLink: result.links.html
+          htmlLink: result.links.html,
+          downloadLink: result.links.download,
+          photographer: result.user.name // Extract photographer's name
         }));
         if (page === 1) {
           // Clear existing images if it's the first page for the current keyword
@@ -63,9 +65,8 @@ const Search = () => {
     searchImage(); // Fetch more images
   };
 
-  const openInNewTab = (url) => {
-    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-    if (newWindow) newWindow.opener = null;
+  const triggerDownload = (htmlLink) => {
+    window.open(htmlLink, "_blank");
   };
 
   return (
@@ -77,7 +78,10 @@ const Search = () => {
       </form>
       <div id="search-result" ref={searchResult}> 
         {images.map((image) => (
-          <img key={image.id} src={image.url} alt={image.alt} onClick={() => openInNewTab(image.htmlLink)} />
+          <div key={image.id} onClick={() => triggerDownload(image.downloadLink)}>
+            <img src={image.url} alt={image.alt} />
+            <p>Photo by <a className='photographer' href={image.htmlLink} target="_blank" rel="noopener noreferrer">{image.photographer}</a> on Unsplash</p>
+          </div>
         ))}
       </div>
       <button id="show-more-btn" ref={searchMore} style={{ display: 'none' }} onClick={handleShowMoreClick}>Show More</button>
