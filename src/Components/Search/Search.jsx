@@ -83,6 +83,7 @@ const Search = () => {
       {loading && (
         <div className="preload">
           <div className="emoji">🕐</div>
+          <div className="emoji-text">Loading...</div>
         </div>
       )}
       <div id="search-result" ref={searchResult}> 

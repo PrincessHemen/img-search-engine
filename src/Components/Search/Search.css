@@ -99,3 +99,10 @@ form button {
 .emoji{
   font-size: 100px;
 }
+.preload{
+  display: flex;
+  flex-direction: column;
+}
+.emoji-text{
+  font-size: 85px; 
+}
