@@ -11,10 +11,12 @@ const Search = () => {
   const [page, setPage] = useState(1);
   const [searchBoxValue, setSearchBoxValue] = useState('');
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false); // State for managing loading status
 
   const accessKey = '8zPkKwky_zxvO7EkqbG3PJKq_Sdm8CmXhOOu8BPyiwM'; // Replace with your actual Unsplash access key
 
   const searchImage = async () => {
+    setLoading(true); // Start loading
     setKeyword(searchBoxValue);
     const url = `https://api.unsplash.com/search/photos?page=${page}&query=${searchBoxValue}&client_id=${accessKey}&per_page=12`;
     try {
@@ -45,6 +47,8 @@ const Search = () => {
       }
     } catch (error) {
       console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -76,6 +80,11 @@ const Search = () => {
         <input type="text" id='search-box' ref={searchBox} placeholder='Search for images here...' onChange={handleSearchInputChange} /> 
         <button type="submit">Search</button>
       </form>
+      {loading && (
+        <div className="preload">
+          <div className="emoji">🕐</div>
+        </div>
+      )}
       <div id="search-result" ref={searchResult}> 
         {images.map((image) => (
           <div key={image.id} onClick={() => triggerDownload(image.downloadLink)}>
